@@ -11,8 +11,8 @@ iso_version="$(date +%Y.%m.%d)"
 install_dir="lumiere"
 buildmodes=('iso')
 bootmodes=(
-    'uefi.systemd-boot.esp'
-    'uefi.systemd-boot.eltorito'
+    'uefi-x64.systemd-boot.esp'
+    'uefi-x64.systemd-boot.eltorito'
 )
 arch="x86_64"
 pacman_conf="pacman.conf"

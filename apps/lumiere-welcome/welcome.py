@@ -15,7 +15,7 @@ lumiere-welcome: İlk açılışta kullanıcıyı karşılayan GTK4 uygulaması.
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, Gio, GLib, Pango
+from gi.repository import Gtk, Adw
 import subprocess
 import os
 

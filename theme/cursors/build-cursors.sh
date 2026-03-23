@@ -56,7 +56,7 @@ for svg_name in "${!CURSOR_MAP[@]}"; do
 
     # xcursorgen config dosyası oluştur
     config_file="$TMP_DIR/${cursor_name}.cfg"
-    > "$config_file"
+    true > "$config_file"
 
     # Hotspot: varsayılan imleceler için (1,1), diğerleri merkez
     hotspot_x=1

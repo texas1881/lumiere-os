@@ -15,23 +15,22 @@ lumiere-store: GTK4/Adwaita flatpak tabanlı uygulama mağazası.
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, GLib, Gio, Pango
+from gi.repository import Gtk, Adw, GLib, Pango
 import subprocess
-import json
 import threading
 
 APP_ID = "os.lumiere.store"
 VERSION = "0.3.0"
 
 CATEGORIES = {
-    "all":           ("Tümü", "view-app-grid-symbolic"),
-    "productivity":  ("Üretkenlik", "x-office-document-symbolic"),
-    "internet":      ("İnternet", "network-wireless-symbolic"),
-    "development":   ("Geliştirme", "utilities-terminal-symbolic"),
-    "games":         ("Oyunlar", "input-gaming-symbolic"),
-    "graphics":      ("Grafik", "applications-graphics-symbolic"),
-    "multimedia":    ("Multimedya", "applications-multimedia-symbolic"),
-    "utilities":     ("Araçlar", "applications-utilities-symbolic"),
+    "all": ("Tümü", "view-app-grid-symbolic"),
+    "productivity": ("Üretkenlik", "x-office-document-symbolic"),
+    "internet": ("İnternet", "network-wireless-symbolic"),
+    "development": ("Geliştirme", "utilities-terminal-symbolic"),
+    "games": ("Oyunlar", "input-gaming-symbolic"),
+    "graphics": ("Grafik", "applications-graphics-symbolic"),
+    "multimedia": ("Multimedya", "applications-multimedia-symbolic"),
+    "utilities": ("Araçlar", "applications-utilities-symbolic"),
 }
 
 

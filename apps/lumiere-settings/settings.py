@@ -15,11 +15,10 @@ Paneller:
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, Gio, GLib, Pango
+from gi.repository import Gtk, Adw
 import subprocess
 import json
 import os
-import re
 
 APP_ID = "os.lumiere.settings"
 VERSION = "0.2.0"
@@ -134,7 +133,7 @@ class AppearancePage(Gtk.Box):
         # ── Opaklık ──
         opacity_group = Adw.PreferencesGroup(title="Pencere Opaklığı")
 
-        active_row = Adw.ActionRow(title="Aktif Pencere", subtitle=f"{int(settings['opacity_active']*100)}%")
+        active_row = Adw.ActionRow(title="Aktif Pencere", subtitle=f"{int(settings['opacity_active'] * 100)}%")
         self.active_scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0.5, 1.0, 0.05)
         self.active_scale.set_value(settings["opacity_active"])
         self.active_scale.set_size_request(200, -1)
@@ -143,7 +142,7 @@ class AppearancePage(Gtk.Box):
         active_row.add_suffix(self.active_scale)
         opacity_group.add(active_row)
 
-        inactive_row = Adw.ActionRow(title="Pasif Pencere", subtitle=f"{int(settings['opacity_inactive']*100)}%")
+        inactive_row = Adw.ActionRow(title="Pasif Pencere", subtitle=f"{int(settings['opacity_inactive'] * 100)}%")
         self.inactive_scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0.3, 1.0, 0.05)
         self.inactive_scale.set_value(settings["opacity_inactive"])
         self.inactive_scale.set_size_request(200, -1)
@@ -170,7 +169,7 @@ class AppearancePage(Gtk.Box):
 
     def _on_accent_changed(self, btn):
         rgba = btn.get_rgba()
-        self.settings["accent_color"] = f"#{int(rgba.red*255):02x}{int(rgba.green*255):02x}{int(rgba.blue*255):02x}"
+        self.settings["accent_color"] = f"#{int(rgba.red * 255):02x}{int(rgba.green * 255):02x}{int(rgba.blue * 255):02x}"
         self.save_callback()
 
     def _on_opacity_changed(self, scale, key):

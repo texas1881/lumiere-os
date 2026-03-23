@@ -17,10 +17,9 @@ Adımlar:
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, GLib, Gio, Pango
+from gi.repository import Gtk, Adw, GLib
 import subprocess
 import json
-import os
 import threading
 import math
 
@@ -238,8 +237,8 @@ class KeyboardPage(Gtk.Box):
             ("es", "İspanyolca"), ("ru", "Rusça"),
         ]
 
-        self.layout_combo = Gtk.DropDown.new_from_strings([l[1] for l in layouts])
-        self.layout_codes = [l[0] for l in layouts]
+        self.layout_combo = Gtk.DropDown.new_from_strings([lay[1] for lay in layouts])
+        self.layout_codes = [lay[0] for lay in layouts]
 
         layout_row = Adw.ActionRow(title="Düzen", subtitle="Klavye tuş yerleşimi")
         self.layout_combo.set_valign(Gtk.Align.CENTER)
@@ -532,7 +531,7 @@ class InstallPage(Gtk.Box):
             (1.00, "Kurulum tamamlandı!", "Bilgisayarınızı yeniden başlatabilirsiniz"),
         ]
 
-        install_script = "/usr/share/lumiere/installer/install.sh"
+        # install_script varsayılan konum
 
         for fraction, status, detail in steps:
             self._update_ui(fraction, status, detail)

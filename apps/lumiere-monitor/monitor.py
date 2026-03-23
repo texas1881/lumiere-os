@@ -15,7 +15,7 @@ lumiere-monitor: GTK4/Adwaita tabanlı sistem monitör uygulaması.
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, GLib, Gdk
+from gi.repository import Gtk, Adw, GLib
 import subprocess
 import os
 import math
@@ -27,18 +27,18 @@ VERSION = "0.2.0"
 
 # — Lumière Renk Paleti —
 COLORS = {
-    "bg_base":    (0.051, 0.051, 0.078),    # #0D0D14
+    "bg_base": (0.051, 0.051, 0.078),    # #0D0D14
     "bg_surface": (0.075, 0.075, 0.118),    # #13131E
     "bg_overlay": (0.102, 0.102, 0.180),    # #1A1A2E
     "fg_primary": (0.910, 0.902, 0.941),    # #E8E6F0
-    "fg_muted":   (0.420, 0.408, 0.502),    # #6B6880
-    "gold":       (0.961, 0.651, 0.137),    # #F5A623
+    "fg_muted": (0.420, 0.408, 0.502),    # #6B6880
+    "gold": (0.961, 0.651, 0.137),    # #F5A623
     "gold_light": (1.000, 0.816, 0.502),    # #FFD080
-    "green":      (0.290, 0.871, 0.502),    # #4ADE80
-    "blue":       (0.376, 0.647, 0.980),    # #60A5FA
-    "red":        (0.973, 0.443, 0.443),    # #F87171
-    "cyan":       (0.133, 0.827, 0.933),    # #22D3EE
-    "border":     (0.165, 0.165, 0.259),    # #2A2A42
+    "green": (0.290, 0.871, 0.502),    # #4ADE80
+    "blue": (0.376, 0.647, 0.980),    # #60A5FA
+    "red": (0.973, 0.443, 0.443),    # #F87171
+    "cyan": (0.133, 0.827, 0.933),    # #22D3EE
+    "border": (0.165, 0.165, 0.259),    # #2A2A42
 }
 
 

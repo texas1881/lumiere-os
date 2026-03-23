@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- File Manager icon -->
+  <path d="M16 32 L16 104 Q16 112 24 112 L104 112 Q112 112 112 104 L112 48 Q112 40 104 40 L60 40 L52 28 Q50 24 46 24 L24 24 Q16 24 16 32Z" fill="#1A1A2E" stroke="#F5A623" stroke-width="3"/>
+  <path d="M16 48 L112 48 L112 104 Q112 112 104 112 L24 112 Q16 112 16 104Z" fill="#1F1F33"/>
+  <circle cx="64" cy="80" r="12" fill="none" stroke="#F5A623" stroke-width="2.5"/>
+  <path d="M64 72 L64 88 M56 80 L72 80" stroke="#F5A623" stroke-width="2" stroke-linecap="round"/>
+</svg>

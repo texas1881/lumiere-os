@@ -1,0 +1,73 @@
+{
+  "name": "Lumière Dark",
+  "version": "1.0.0",
+  "author": "Lumière OS Team",
+  "description": "Lumière OS varsayılan koyu tema renk paleti",
+
+  "palette": {
+    "background": {
+      "base":    "#0D0D14",
+      "surface": "#13131E",
+      "overlay": "#1A1A2E",
+      "card":    "#1F1F33",
+      "hover":   "#252540"
+    },
+    "foreground": {
+      "primary":   "#E8E6F0",
+      "secondary": "#A9A6B8",
+      "muted":     "#6B6880",
+      "disabled":  "#4A4860"
+    },
+    "accent": {
+      "gold":        "#F5A623",
+      "gold_light":  "#FFD080",
+      "gold_dark":   "#C4841A",
+      "amber":       "#FFBF42",
+      "warm":        "#E8915A"
+    },
+    "semantic": {
+      "success":  "#4ADE80",
+      "warning":  "#FBBF24",
+      "error":    "#F87171",
+      "info":     "#60A5FA"
+    },
+    "border": {
+      "default":  "#2A2A42",
+      "active":   "#F5A623",
+      "subtle":   "#1E1E32"
+    },
+    "terminal": {
+      "black":          "#0D0D14",
+      "red":            "#F87171",
+      "green":          "#4ADE80",
+      "yellow":         "#FBBF24",
+      "blue":           "#60A5FA",
+      "magenta":        "#C084FC",
+      "cyan":           "#22D3EE",
+      "white":          "#E8E6F0",
+      "bright_black":   "#6B6880",
+      "bright_red":     "#FCA5A5",
+      "bright_green":   "#86EFAC",
+      "bright_yellow":  "#FDE68A",
+      "bright_blue":    "#93C5FD",
+      "bright_magenta": "#D8B4FE",
+      "bright_cyan":    "#67E8F9",
+      "bright_white":   "#FFFFFF"
+    }
+  },
+
+  "typography": {
+    "ui_font":       "Inter",
+    "mono_font":     "JetBrains Mono",
+    "ui_size":       "10",
+    "terminal_size": "12"
+  },
+
+  "effects": {
+    "blur_radius":      "12",
+    "border_radius":    "8",
+    "opacity_inactive": "0.85",
+    "opacity_active":   "0.95",
+    "animation_speed":  "250ms"
+  }
+}

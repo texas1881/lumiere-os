@@ -1,0 +1,56 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              ✦ Lumière OS — Swaylock                         ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# Görünüm
+color=0D0D14
+image=~/wallpapers/lumiere-default.png
+scaling=fill
+
+# Efektler
+effect-blur=12x6
+effect-vignette=0.3:0.8
+clock
+timestr=%H:%M
+datestr=%A, %d %B
+
+# Font
+font=Inter
+font-size=48
+
+# İndikatör
+indicator
+indicator-radius=120
+indicator-thickness=8
+
+# Renkler
+inside-color=0D0D1488
+inside-clear-color=0D0D1488
+inside-caps-lock-color=0D0D1488
+inside-ver-color=0D0D1488
+inside-wrong-color=F8717188
+
+key-hl-color=F5A623
+bs-hl-color=F87171
+caps-lock-key-hl-color=FBBF24
+caps-lock-bs-hl-color=F87171
+
+line-color=00000000
+line-clear-color=00000000
+line-caps-lock-color=00000000
+line-ver-color=00000000
+line-wrong-color=00000000
+
+ring-color=2A2A42
+ring-clear-color=60A5FA
+ring-caps-lock-color=FBBF24
+ring-ver-color=F5A623
+ring-wrong-color=F87171
+
+separator-color=00000000
+
+text-color=E8E6F0
+text-clear-color=E8E6F0
+text-caps-lock-color=FBBF24
+text-ver-color=F5A623
+text-wrong-color=F87171

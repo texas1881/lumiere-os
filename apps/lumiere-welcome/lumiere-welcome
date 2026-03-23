@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# lumiere-welcome launcher
+exec python3 /usr/share/lumiere/welcome/welcome.py "$@"

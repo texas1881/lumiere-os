@@ -1,0 +1,43 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              ✦ Lumière OS — Mako Bildirim                    ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# Genel
+max-visible=5
+sort=-time
+layer=overlay
+anchor=top-right
+
+# Görünüm
+font=Inter 11
+background-color=#13131EE6
+text-color=#E8E6F0
+border-color=#2A2A42
+border-size=2
+border-radius=8
+padding=12
+margin=8
+width=320
+height=150
+icon-path=/usr/share/icons/Papirus-Dark
+max-icon-size=48
+
+# Zamanlama
+default-timeout=5000
+ignore-timeout=0
+
+# Davranış
+on-button-left=dismiss
+on-button-right=dismiss-all
+on-button-middle=invoke-default-action
+on-touch=dismiss
+
+# Acil bildirimler
+[urgency=high]
+border-color=#F87171
+default-timeout=10000
+
+# Düşük öncelikli
+[urgency=low]
+border-color=#6B6880
+default-timeout=3000

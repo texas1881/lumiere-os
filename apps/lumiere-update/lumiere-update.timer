@@ -1,0 +1,10 @@
+[Unit]
+Description=Lumière OS Güncelleme Kontrolü
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=12h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

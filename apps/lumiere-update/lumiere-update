@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# ╔══════════════════════════════════════════════════════════════╗
+# ║       ✦ Lumière OS — OTA Güncelleme Yöneticisi               ║
+# ╚══════════════════════════════════════════════════════════════╝
+# Kullanım:
+#   lumiere-update check   — Güncellemeleri kontrol et
+#   lumiere-update apply   — Tümünü güncelle
+#   lumiere-update status  — Waybar JSON çıktısı
+set -euo pipefail
+
+GOLD='\033[38;2;245;166;35m'
+GREEN='\033[38;2;74;222;128m'
+RED='\033[38;2;248;113;113m'
+RESET='\033[0m'
+
+CACHE_FILE="/tmp/lumiere-update-cache.json"
+
+info()  { echo -e "${GREEN}✓${RESET} $*"; }
+warn()  { echo -e "${GOLD}!${RESET} $*"; }
+error() { echo -e "${RED}✗${RESET} $*"; }
+
+# ── Güncelleme Kontrol ──────────────────────────────────────────
+check_updates() {
+    local pacman_count=0
+    local flatpak_count=0
+
+    # Pacman güncellemeleri
+    if command -v checkupdates &>/dev/null; then
+        pacman_count=$(checkupdates 2>/dev/null | wc -l || echo 0)
+    fi
+
+    # Flatpak güncellemeleri
+    if command -v flatpak &>/dev/null; then
+        flatpak_count=$(flatpak remote-ls --updates 2>/dev/null | wc -l || echo 0)
+    fi
+
+    local total=$((pacman_count + flatpak_count))
+
+    # Cache'e kaydet
+    cat > "$CACHE_FILE" <<EOF
+{
+  "total": $total,
+  "pacman": $pacman_count,
+  "flatpak": $flatpak_count,
+  "timestamp": "$(date -Iseconds)"
+}
+EOF
+
+    echo -e "\n  ${GOLD}✦ Lumière Güncelleme Durumu${RESET}\n"
+    info "Pacman: $pacman_count güncelleme"
+    info "Flatpak: $flatpak_count güncelleme"
+    echo -e "\n  Toplam: ${GOLD}${total}${RESET} güncelleme\n"
+
+    if [[ $total -gt 0 ]]; then
+        notify-send -t 5000 "✦ Lumière Güncelleme" \
+            "$total güncelleme mevcut (pacman: $pacman_count, flatpak: $flatpak_count)" \
+            2>/dev/null || true
+    fi
+
+    return $total
+}
+
+# ── Güncellemeleri Uygula ────────────────────────────────────────
+apply_updates() {
+    echo -e "\n  ${GOLD}✦ Lumière — Güncelleme Başlıyor${RESET}\n"
+
+    # Snapshot al (varsa)
+    if command -v lumiere-snapshot &>/dev/null; then
+        info "Güncelleme öncesi snapshot alınıyor..."
+        lumiere-snapshot create "güncelleme-öncesi-$(date +%Y%m%d-%H%M)" || true
+    fi
+
+    # Pacman
+    info "Pacman güncellemesi..."
+    if sudo pacman -Syu --noconfirm; then
+        info "Pacman güncellendi."
+    else
+        error "Pacman güncelleme hatası!"
+    fi
+
+    # Flatpak
+    if command -v flatpak &>/dev/null; then
+        info "Flatpak güncellemesi..."
+        flatpak update -y 2>/dev/null || true
+        info "Flatpak güncellendi."
+    fi
+
+    # Cache temizle
+    rm -f "$CACHE_FILE"
+
+    echo ""
+    info "Tüm güncellemeler uygulandı!"
+    notify-send -t 3000 "✦ Güncelleme Tamamlandı" \
+        "Sistem başarıyla güncellendi." 2>/dev/null || true
+}
+
+# ── Waybar Status (JSON) ────────────────────────────────────────
+waybar_status() {
+    if [[ -f "$CACHE_FILE" ]]; then
+        local total
+        total=$(python3 -c "import json; print(json.load(open('$CACHE_FILE'))['total'])" 2>/dev/null || echo 0)
+
+        if [[ "$total" -gt 0 ]]; then
+            echo "{\"text\":\"  $total\",\"tooltip\":\"$total güncelleme mevcut\",\"class\":\"updates-available\"}"
+        else
+            echo "{\"text\":\"\",\"tooltip\":\"Sistem güncel\",\"class\":\"up-to-date\"}"
+        fi
+    else
+        # Henüz kontrol edilmedi
+        echo "{\"text\":\"\",\"tooltip\":\"Kontrol edilmedi\",\"class\":\"unknown\"}"
+    fi
+}
+
+# ── Ana Akış ─────────────────────────────────────────────────────
+case "${1:-check}" in
+    check)
+        check_updates
+        ;;
+    apply)
+        apply_updates
+        ;;
+    status)
+        waybar_status
+        ;;
+    *)
+        echo "Kullanım: $(basename "$0") [check|apply|status]"
+        exit 1
+        ;;
+esac

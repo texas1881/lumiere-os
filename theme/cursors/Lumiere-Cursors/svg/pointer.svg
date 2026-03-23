@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Pointer / hand cursor -->
+  <path d="M14 4 L14 18 L10 14 L8 18 L8 22 Q8 28 14 28 L22 28 Q26 28 26 24 L26 14 Q26 12 24 12 L22 12 Q22 10 20 10 L20 10 Q20 8 18 8 L18 8 L18 4 Q18 2 16 2 Q14 2 14 4Z" fill="#0D0D14" stroke="#F5A623" stroke-width="1.2" stroke-linejoin="round"/>
+  <!-- Finger highlight -->
+  <line x1="18" y1="12" x2="18" y2="8" stroke="#F5A623" stroke-width="0.8"/>
+  <line x1="22" y1="14" x2="22" y2="10" stroke="#F5A623" stroke-width="0.8"/>
+</svg>

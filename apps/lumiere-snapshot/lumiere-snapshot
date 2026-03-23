@@ -1,0 +1,229 @@
+#!/usr/bin/env bash
+# ╔══════════════════════════════════════════════════════════════╗
+# ║       ✦ Lumière OS — Btrfs Snapshot Yöneticisi               ║
+# ╚══════════════════════════════════════════════════════════════╝
+# Kullanım:
+#   lumiere-snapshot create [açıklama]  — Yeni snapshot
+#   lumiere-snapshot list               — Snapshot listesi
+#   lumiere-snapshot delete <id>        — Snapshot sil
+#   lumiere-snapshot rollback <id>      — Snapshot'a geri dön
+#   lumiere-snapshot diff <id>          — Farkları göster
+set -euo pipefail
+
+SNAPSHOT_DIR="/.snapshots"
+SUBVOL_ROOT="/"
+METADATA_DIR="${SNAPSHOT_DIR}/.metadata"
+
+GOLD='\033[38;2;245;166;35m'
+GREEN='\033[38;2;74;222;128m'
+RED='\033[38;2;248;113;113m'
+BLUE='\033[38;2;96;165;250m'
+MUTED='\033[38;2;107;104;128m'
+RESET='\033[0m'
+
+info()  { echo -e "  ${GREEN}✓${RESET} $*"; }
+warn()  { echo -e "  ${GOLD}!${RESET} $*"; }
+error() { echo -e "  ${RED}✗${RESET} $*"; }
+step()  { echo -e "  ${BLUE}→${RESET} $*"; }
+
+# ── Ön Kontrol ──────────────────────────────────────────────────
+check_btrfs() {
+    if ! findmnt -n -o FSTYPE / | grep -q btrfs; then
+        error "Root dosya sistemi btrfs değil!"
+        exit 1
+    fi
+
+    if [[ $EUID -ne 0 ]]; then
+        error "Bu komut root olarak çalıştırılmalıdır."
+        echo -e "  ${MUTED}Kullanım: sudo lumiere-snapshot $*${RESET}"
+        exit 1
+    fi
+
+    mkdir -p "$SNAPSHOT_DIR" "$METADATA_DIR"
+}
+
+# ── Snapshot Oluştur ─────────────────────────────────────────────
+create_snapshot() {
+    check_btrfs
+
+    local desc="${1:-manual snapshot}"
+    local timestamp
+    timestamp=$(date +%Y%m%d-%H%M%S)
+    local snap_name="snapshot-${timestamp}"
+    local snap_path="${SNAPSHOT_DIR}/${snap_name}"
+
+    step "Snapshot oluşturuluyor: ${snap_name}"
+
+    # Btrfs snapshot
+    btrfs subvolume snapshot -r "$SUBVOL_ROOT" "$snap_path"
+
+    # Metadata kaydet
+    cat > "${METADATA_DIR}/${snap_name}.json" <<EOF
+{
+  "id": "${snap_name}",
+  "timestamp": "$(date -Iseconds)",
+  "description": "${desc}",
+  "kernel": "$(uname -r)",
+  "type": "manual"
+}
+EOF
+
+    info "Snapshot oluşturuldu: ${snap_name}"
+    info "Açıklama: ${desc}"
+}
+
+# ── Snapshot Listele ─────────────────────────────────────────────
+list_snapshots() {
+    check_btrfs
+
+    echo -e "\n  ${GOLD}✦ Lumière Snapshot Listesi${RESET}\n"
+
+    local count=0
+    for meta in "${METADATA_DIR}"/*.json; do
+        [[ -f "$meta" ]] || continue
+
+        local id desc timestamp
+        id=$(python3 -c "import json; print(json.load(open('$meta'))['id'])" 2>/dev/null)
+        desc=$(python3 -c "import json; print(json.load(open('$meta'))['description'])" 2>/dev/null)
+        timestamp=$(python3 -c "import json; print(json.load(open('$meta'))['timestamp'])" 2>/dev/null)
+
+        if [[ -d "${SNAPSHOT_DIR}/${id}" ]]; then
+            local size
+            size=$(du -sh "${SNAPSHOT_DIR}/${id}" 2>/dev/null | awk '{print $1}')
+            echo -e "  ${GOLD}${id}${RESET}"
+            echo -e "    Tarih:    ${timestamp}"
+            echo -e "    Açıklama: ${desc}"
+            echo -e "    Boyut:    ${size:-?}"
+            echo ""
+            ((count++))
+        fi
+    done
+
+    if [[ $count -eq 0 ]]; then
+        echo -e "  ${MUTED}Hiç snapshot bulunamadı.${RESET}"
+    fi
+
+    echo -e "  ${MUTED}Toplam: ${count} snapshot${RESET}\n"
+}
+
+# ── Snapshot Sil ─────────────────────────────────────────────────
+delete_snapshot() {
+    check_btrfs
+
+    local snap_id="$1"
+    local snap_path="${SNAPSHOT_DIR}/${snap_id}"
+
+    if [[ ! -d "$snap_path" ]]; then
+        error "Snapshot bulunamadı: ${snap_id}"
+        exit 1
+    fi
+
+    step "Snapshot siliniyor: ${snap_id}"
+    btrfs subvolume delete "$snap_path"
+    rm -f "${METADATA_DIR}/${snap_id}.json"
+    info "Snapshot silindi: ${snap_id}"
+}
+
+# ── Rollback ─────────────────────────────────────────────────────
+rollback_snapshot() {
+    check_btrfs
+
+    local snap_id="$1"
+    local snap_path="${SNAPSHOT_DIR}/${snap_id}"
+
+    if [[ ! -d "$snap_path" ]]; then
+        error "Snapshot bulunamadı: ${snap_id}"
+        exit 1
+    fi
+
+    echo -e "\n  ${RED}⚠ DİKKAT: Bu işlem mevcut sistemi geri alacaktır!${RESET}"
+    echo -e "  ${MUTED}Snapshot: ${snap_id}${RESET}\n"
+    echo -n "  Devam etmek istiyor musunuz? (evet) "
+    read -r confirm
+
+    if [[ "$confirm" != "evet" ]]; then
+        info "İptal edildi."
+        return
+    fi
+
+    step "Rollback uygulanıyor..."
+
+    # Mevcut kökü yedekle
+    local backup_name="pre-rollback-$(date +%Y%m%d-%H%M%S)"
+    btrfs subvolume snapshot "$SUBVOL_ROOT" "${SNAPSHOT_DIR}/${backup_name}"
+
+    # Metadata kaydet
+    cat > "${METADATA_DIR}/${backup_name}.json" <<EOF
+{
+  "id": "${backup_name}",
+  "timestamp": "$(date -Iseconds)",
+  "description": "rollback öncesi otomatik yedek",
+  "kernel": "$(uname -r)",
+  "type": "pre-rollback"
+}
+EOF
+
+    info "Mevcut sistem yedeklendi: ${backup_name}"
+
+    # Rollback için mevcut root'u sil ve snapshot'tan yeniden oluştur
+    # NOT: Gerçek rollback için sistemi dışarıdan (live USB) yapmak gerekir
+    # veya initramfs'te snapshot-boot mekanizması kullanılır
+
+    warn "Rollback tamamlamak için yeniden başlatmanız gerekiyor."
+    warn "Boot menüsünden '${snap_id}' snapshot'ını seçin."
+
+    info "Rollback hazırlandı."
+}
+
+# ── Diff (fark) ──────────────────────────────────────────────────
+diff_snapshot() {
+    check_btrfs
+
+    local snap_id="$1"
+    local snap_path="${SNAPSHOT_DIR}/${snap_id}"
+
+    if [[ ! -d "$snap_path" ]]; then
+        error "Snapshot bulunamadı: ${snap_id}"
+        exit 1
+    fi
+
+    step "Snapshot ile mevcut sistem karşılaştırılıyor..."
+
+    # Btrfs find-new ile değişen dosyaları bul
+    local gen
+    gen=$(btrfs subvolume find-new "$snap_path" 9999999 2>/dev/null | \
+          awk '{print $NF}' | head -1)
+
+    if [[ -n "$gen" ]]; then
+        btrfs subvolume find-new "$SUBVOL_ROOT" "$gen" 2>/dev/null | \
+            head -50
+    else
+        info "Fark bulunamadı veya hesaplanamadı."
+    fi
+}
+
+# ── Ana Akış ─────────────────────────────────────────────────────
+case "${1:-list}" in
+    create)
+        create_snapshot "${*:2}"
+        ;;
+    list|ls)
+        list_snapshots
+        ;;
+    delete|rm)
+        [[ -z "${2:-}" ]] && { error "Snapshot ID belirtin."; exit 1; }
+        delete_snapshot "$2"
+        ;;
+    rollback)
+        [[ -z "${2:-}" ]] && { error "Snapshot ID belirtin."; exit 1; }
+        rollback_snapshot "$2"
+        ;;
+    diff)
+        [[ -z "${2:-}" ]] && { error "Snapshot ID belirtin."; exit 1; }
+        diff_snapshot "$2"
+        ;;
+    *)
+        echo "Kullanım: $(basename "$0") [create|list|delete|rollback|diff]"
+        exit 1
+        ;;
+esac

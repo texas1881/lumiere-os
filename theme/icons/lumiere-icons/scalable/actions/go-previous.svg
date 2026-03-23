@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Go Previous arrow -->
+  <circle cx="64" cy="64" r="44" fill="#1A1A2E" stroke="#F5A623" stroke-width="3"/>
+  <polyline points="76,40 48,64 76,88" fill="none" stroke="#F5A623" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière App Store
+GenericName=Software Center
+Comment=Flatpak uygulama mağazası
+Exec=lumiere-store
+Icon=system-software-install
+Terminal=false
+Categories=System;PackageManager;
+Keywords=store;software;flatpak;uygulama;mağaza;
+StartupNotify=true

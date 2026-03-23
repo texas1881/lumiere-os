@@ -1,0 +1,175 @@
+/* ╔══════════════════════════════════════════════════════════════╗
+ * ║              ✦ Lumière OS — GTK 4.0 Theme                   ║
+ * ╚══════════════════════════════════════════════════════════════╝ */
+
+/* ─── Renk Tanımları ─────────────────────────────────────────── */
+@define-color bg_color #0D0D14;
+@define-color surface_color #13131E;
+@define-color overlay_color #1A1A2E;
+@define-color card_color #1F1F33;
+@define-color hover_color #252540;
+
+@define-color fg_color #E8E6F0;
+@define-color fg_secondary #A9A6B8;
+@define-color fg_muted #6B6880;
+@define-color fg_disabled #4A4860;
+
+@define-color accent_color #F5A623;
+@define-color accent_light #FFD080;
+@define-color accent_dark #C4841A;
+
+@define-color success_color #4ADE80;
+@define-color warning_color #FBBF24;
+@define-color error_color #F87171;
+@define-color info_color #60A5FA;
+
+@define-color border_color #2A2A42;
+@define-color border_active #F5A623;
+@define-color border_subtle #1E1E32;
+
+/* ─── Pencere ────────────────────────────────────────────────── */
+window {
+    background-color: @bg_color;
+    color: @fg_color;
+}
+
+window.background {
+    background-color: @bg_color;
+}
+
+/* ─── Headerbar ──────────────────────────────────────────────── */
+headerbar {
+    background-color: @surface_color;
+    border-bottom: 1px solid @border_color;
+    color: @fg_color;
+    min-height: 40px;
+}
+
+headerbar .title {
+    font-weight: 600;
+    color: @fg_color;
+}
+
+/* ─── Butonlar ───────────────────────────────────────────────── */
+button {
+    background-color: @overlay_color;
+    color: @fg_color;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 16px;
+    transition: all 200ms ease;
+}
+
+button:hover {
+    background-color: @hover_color;
+    border-color: @accent_color;
+}
+
+button:active {
+    background-color: @accent_dark;
+}
+
+button.suggested-action {
+    background-color: @accent_color;
+    color: @bg_color;
+    border-color: @accent_color;
+    font-weight: 600;
+}
+
+button.suggested-action:hover {
+    background-color: @accent_light;
+}
+
+button.destructive-action {
+    background-color: @error_color;
+    color: @bg_color;
+    border-color: @error_color;
+}
+
+/* ─── Entry (Metin girişi) ───────────────────────────────────── */
+entry {
+    background-color: @surface_color;
+    color: @fg_color;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 12px;
+    caret-color: @accent_color;
+}
+
+entry:focus {
+    border-color: @accent_color;
+    box-shadow: 0 0 0 2px alpha(@accent_color, 0.2);
+}
+
+/* ─── Liste ──────────────────────────────────────────────────── */
+list,
+listview {
+    background-color: transparent;
+}
+
+row {
+    border-radius: 6px;
+    padding: 4px 8px;
+    transition: background-color 200ms ease;
+}
+
+row:hover {
+    background-color: @overlay_color;
+}
+
+row:selected {
+    background-color: alpha(@accent_color, 0.15);
+    color: @accent_color;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+scrollbar slider {
+    background-color: @fg_muted;
+    border-radius: 999px;
+    min-width: 6px;
+    min-height: 6px;
+}
+
+scrollbar slider:hover {
+    background-color: @fg_secondary;
+}
+
+/* ─── Switch ─────────────────────────────────────────────────── */
+switch {
+    background-color: @overlay_color;
+    border: 1px solid @border_color;
+    border-radius: 999px;
+}
+
+switch:checked {
+    background-color: @accent_color;
+    border-color: @accent_color;
+}
+
+/* ─── Tooltip ────────────────────────────────────────────────── */
+tooltip {
+    background-color: @surface_color;
+    border: 1px solid @border_color;
+    border-radius: 8px;
+    color: @fg_color;
+}
+
+/* ─── Menü ───────────────────────────────────────────────────── */
+popover,
+menu {
+    background-color: @surface_color;
+    border: 1px solid @border_color;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+modelbutton:hover {
+    background-color: @overlay_color;
+    border-radius: 6px;
+}
+
+/* ─── Seçim ──────────────────────────────────────────────────── */
+selection {
+    background-color: alpha(@accent_color, 0.3);
+    color: @fg_color;
+}

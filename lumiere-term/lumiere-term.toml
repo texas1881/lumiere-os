@@ -1,0 +1,40 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║          ✦ Lumière Terminal — Varsayılan Konfigürasyon       ║
+# ╚══════════════════════════════════════════════════════════════╝
+# Dosya yolu: ~/.config/lumiere/terminal.toml
+
+font_family = "JetBrains Mono"
+font_size = 13.0
+opacity = 0.95
+padding = 8
+columns = 80
+rows = 24
+window_width = 900
+window_height = 600
+scrollback_lines = 10000
+
+[colors]
+background = [0.051, 0.051, 0.078, 0.95]
+foreground = [0.910, 0.902, 0.941, 1.0]
+cursor = [0.961, 0.651, 0.137, 1.0]
+selection = [0.961, 0.651, 0.137, 0.3]
+
+# 16 ANSI renk (Lumière teması)
+palette = [
+  [0.102, 0.102, 0.180],   # black
+  [0.973, 0.443, 0.443],   # red
+  [0.290, 0.871, 0.502],   # green
+  [0.961, 0.651, 0.137],   # yellow (gold)
+  [0.376, 0.647, 0.980],   # blue
+  [0.647, 0.361, 0.965],   # magenta
+  [0.133, 0.827, 0.933],   # cyan
+  [0.910, 0.902, 0.941],   # white
+  [0.420, 0.408, 0.502],   # bright black
+  [1.000, 0.490, 0.490],   # bright red
+  [0.400, 0.941, 0.600],   # bright green
+  [1.000, 0.816, 0.502],   # bright yellow
+  [0.525, 0.757, 1.000],   # bright blue
+  [0.757, 0.557, 1.000],   # bright magenta
+  [0.290, 0.902, 0.984],   # bright cyan
+  [1.000, 1.000, 1.000],   # bright white
+]

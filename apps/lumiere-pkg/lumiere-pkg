@@ -1,0 +1,242 @@
+#!/usr/bin/env python3
+# ╔══════════════════════════════════════════════════════════════╗
+# ║          ✦ Lumière OS — Paket Yönetim Aracı                 ║
+# ╚══════════════════════════════════════════════════════════════╝
+"""
+lumiere-pkg: pacman ve AUR üzerine kullanıcı dostu bir wrapper.
+
+Kullanım:
+    lumiere-pkg install <paket>      Paket yükle
+    lumiere-pkg remove <paket>       Paket kaldır
+    lumiere-pkg update               Sistemi güncelle
+    lumiere-pkg search <arama>       Paket ara
+    lumiere-pkg info <paket>         Paket bilgisi göster
+    lumiere-pkg list                 Yüklü paketleri listele
+    lumiere-pkg clean                Önbelleği temizle
+    lumiere-pkg help                 Bu mesajı göster
+"""
+
+import subprocess
+import sys
+import os
+import shutil
+
+# ─── Renkler ────────────────────────────────────────────────────
+class Colors:
+    GOLD    = "\033[38;2;245;166;35m"
+    GREEN   = "\033[38;2;74;222;128m"
+    RED     = "\033[38;2;248;113;113m"
+    BLUE    = "\033[38;2;96;165;250m"
+    MUTED   = "\033[38;2;107;104;128m"
+    WHITE   = "\033[38;2;232;230;240m"
+    BOLD    = "\033[1m"
+    RESET   = "\033[0m"
+
+C = Colors
+
+# ─── Yardımcılar ────────────────────────────────────────────────
+def banner():
+    print(f"""
+{C.GOLD}  ╔══════════════════════════════════════╗
+  ║       ✦ lumiere-pkg v0.1.0          ║
+  ╚══════════════════════════════════════╝{C.RESET}
+""")
+
+def info(msg):
+    print(f"  {C.GREEN}✓{C.RESET} {msg}")
+
+def warn(msg):
+    print(f"  {C.GOLD}!{C.RESET} {msg}")
+
+def error(msg):
+    print(f"  {C.RED}✗{C.RESET} {msg}")
+
+def step(msg):
+    print(f"  {C.BLUE}→{C.RESET} {msg}")
+
+def run(cmd, check=True):
+    """Komutu çalıştır ve çıktıyı göster."""
+    try:
+        result = subprocess.run(
+            cmd,
+            shell=True,
+            check=check,
+            text=True
+        )
+        return result.returncode == 0
+    except subprocess.CalledProcessError:
+        return False
+
+def has_aur_helper():
+    """AUR helper (paru veya yay) mevcut mu kontrol et."""
+    for helper in ["paru", "yay"]:
+        if shutil.which(helper):
+            return helper
+    return None
+
+# ─── Komutlar ───────────────────────────────────────────────────
+def cmd_install(packages):
+    """Paketleri yükle (resmi repo + AUR)."""
+    if not packages:
+        error("Paket adı belirtilmedi.")
+        print(f"  Kullanım: lumiere-pkg install {C.MUTED}<paket1> <paket2> ...{C.RESET}")
+        return
+
+    pkg_str = " ".join(packages)
+    step(f"Paketler yükleniyor: {C.GOLD}{pkg_str}{C.RESET}")
+
+    aur_helper = has_aur_helper()
+    if aur_helper:
+        success = run(f"sudo {aur_helper} -S --needed {pkg_str}")
+    else:
+        success = run(f"sudo pacman -S --needed {pkg_str}")
+
+    if success:
+        info(f"Paketler başarıyla yüklendi: {pkg_str}")
+    else:
+        error("Bazı paketler yüklenemedi.")
+
+def cmd_remove(packages):
+    """Paketleri kaldır (bağımlılıklarıyla birlikte)."""
+    if not packages:
+        error("Paket adı belirtilmedi.")
+        return
+
+    pkg_str = " ".join(packages)
+    step(f"Paketler kaldırılıyor: {C.GOLD}{pkg_str}{C.RESET}")
+
+    success = run(f"sudo pacman -Rns {pkg_str}")
+    if success:
+        info(f"Paketler kaldırıldı: {pkg_str}")
+
+def cmd_update():
+    """Sistemi güncelle."""
+    step("Sistem güncelleniyor...")
+
+    aur_helper = has_aur_helper()
+    if aur_helper:
+        success = run(f"sudo {aur_helper} -Syu")
+    else:
+        success = run("sudo pacman -Syu")
+
+    if success:
+        info("Sistem güncel!")
+    else:
+        error("Güncelleme sırasında hata oluştu.")
+
+def cmd_search(query):
+    """Paket ara."""
+    if not query:
+        error("Arama terimi belirtilmedi.")
+        return
+
+    search_str = " ".join(query)
+    step(f"Aranıyor: {C.GOLD}{search_str}{C.RESET}")
+
+    # Resmi repolar
+    print(f"\n  {C.BOLD}── Resmi Repolar ──{C.RESET}")
+    run(f"pacman -Ss {search_str}", check=False)
+
+    # AUR
+    aur_helper = has_aur_helper()
+    if aur_helper:
+        print(f"\n  {C.BOLD}── AUR ──{C.RESET}")
+        run(f"{aur_helper} -Ss {search_str}", check=False)
+
+def cmd_info(packages):
+    """Paket bilgisi göster."""
+    if not packages:
+        error("Paket adı belirtilmedi.")
+        return
+
+    for pkg in packages:
+        step(f"Paket bilgisi: {C.GOLD}{pkg}{C.RESET}")
+        # Önce yüklü paketlerden bak
+        if not run(f"pacman -Qi {pkg}", check=False):
+            # Sonra repo'dan bak
+            run(f"pacman -Si {pkg}", check=False)
+
+def cmd_list():
+    """Yüklü paketleri listele."""
+    step("Yüklü paketler listeleniyor...")
+    run("pacman -Qe")
+
+def cmd_clean():
+    """Paket önbelleğini temizle."""
+    step("Önbellek temizleniyor...")
+
+    # Eski sürümleri temizle, son 1 sürümü tut
+    run("sudo pacman -Sc --noconfirm")
+
+    # Yetim paketleri kaldır
+    print()
+    step("Yetim paketler kontrol ediliyor...")
+    result = subprocess.run(
+        "pacman -Qdtq",
+        shell=True, capture_output=True, text=True
+    )
+    if result.stdout.strip():
+        warn("Yetim paketler bulundu:")
+        print(result.stdout)
+        run(f"sudo pacman -Rns {result.stdout.strip()}", check=False)
+    else:
+        info("Yetim paket yok.")
+
+    info("Temizlik tamamlandı!")
+
+def cmd_help():
+    """Yardım mesajını göster."""
+    banner()
+    print(f"""  {C.BOLD}Kullanım:{C.RESET}
+    lumiere-pkg {C.GOLD}<komut>{C.RESET} [argümanlar]
+
+  {C.BOLD}Komutlar:{C.RESET}
+    {C.GOLD}install{C.RESET}  <paket...>   Paket yükle (resmi + AUR)
+    {C.GOLD}remove{C.RESET}   <paket...>   Paket kaldır
+    {C.GOLD}update{C.RESET}               Sistemi güncelle
+    {C.GOLD}search{C.RESET}   <arama>      Paket ara
+    {C.GOLD}info{C.RESET}     <paket>      Paket bilgisi göster
+    {C.GOLD}list{C.RESET}                  Yüklü paketleri listele
+    {C.GOLD}clean{C.RESET}                Önbelleği temizle
+    {C.GOLD}help{C.RESET}                 Bu mesajı göster
+
+  {C.BOLD}Örnekler:{C.RESET}
+    {C.MUTED}lumiere-pkg install firefox vlc{C.RESET}
+    {C.MUTED}lumiere-pkg search video player{C.RESET}
+    {C.MUTED}lumiere-pkg update{C.RESET}
+""")
+
+# ─── Ana Giriş ──────────────────────────────────────────────────
+COMMANDS = {
+    "install": cmd_install,
+    "remove":  cmd_remove,
+    "uninstall": cmd_remove,
+    "update":  lambda _: cmd_update(),
+    "upgrade": lambda _: cmd_update(),
+    "search":  cmd_search,
+    "info":    cmd_info,
+    "list":    lambda _: cmd_list(),
+    "clean":   lambda _: cmd_clean(),
+    "help":    lambda _: cmd_help(),
+    "--help":  lambda _: cmd_help(),
+    "-h":      lambda _: cmd_help(),
+}
+
+def main():
+    if len(sys.argv) < 2:
+        cmd_help()
+        sys.exit(0)
+
+    command = sys.argv[1].lower()
+    args = sys.argv[2:]
+
+    if command in COMMANDS:
+        banner()
+        COMMANDS[command](args)
+    else:
+        error(f"Bilinmeyen komut: {command}")
+        print(f"  {C.MUTED}Yardım için: lumiere-pkg help{C.RESET}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

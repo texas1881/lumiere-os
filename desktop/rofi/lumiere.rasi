@@ -1,0 +1,112 @@
+/* ╔══════════════════════════════════════════════════════════════╗
+ * ║              ✦ Lumière OS — Rofi Theme                      ║
+ * ╚══════════════════════════════════════════════════════════════╝ */
+
+* {
+    bg:           #0D0D14E6;
+    bg-alt:       #1A1A2EE6;
+    bg-selected:  #F5A62333;
+    fg:           #E8E6F0;
+    fg-alt:       #A9A6B8;
+    accent:       #F5A623;
+    border-color: #2A2A42;
+    urgent:       #F87171;
+
+    font: "Inter 12";
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    width: 600px;
+    background-color: @bg;
+    border: 2px solid @border-color;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+mainbox {
+    spacing: 12px;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border: 1px solid @border-color;
+    border-radius: 8px;
+    padding: 10px 16px;
+    spacing: 8px;
+    children: [ icon-search, entry ];
+}
+
+icon-search {
+    expand: false;
+    filename: "search";
+    size: 20px;
+    vertical-align: 0.5;
+}
+
+entry {
+    placeholder: "Ara...";
+    placeholder-color: @fg-alt;
+    font: "Inter 13";
+}
+
+listbox {
+    spacing: 4px;
+}
+
+listview {
+    lines: 8;
+    columns: 1;
+    fixed-height: true;
+    spacing: 4px;
+    scrollbar: false;
+}
+
+element {
+    padding: 8px 12px;
+    spacing: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @bg-selected;
+    text-color: @accent;
+}
+
+element-icon {
+    size: 24px;
+    cursor: inherit;
+    vertical-align: 0.5;
+}
+
+element-text {
+    cursor: inherit;
+    vertical-align: 0.5;
+}
+
+element-text selected {
+    text-color: @accent;
+}
+
+message {
+    background-color: @bg-alt;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+textbox {
+    text-color: @fg-alt;
+}
+
+scrollbar {
+    handle-width: 4px;
+    handle-color: @border-color;
+    border-radius: 4px;
+}

@@ -1,0 +1,179 @@
+/* ╔══════════════════════════════════════════════════════════════╗
+ * ║              ✦ Lumière OS — Waybar Stylesheet               ║
+ * ╚══════════════════════════════════════════════════════════════╝ */
+
+/* ─── Global ─────────────────────────────────────────────────── */
+* {
+    font-family: "Inter", "JetBrains Mono Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(13, 13, 20, 0.85);
+    border-bottom: 2px solid rgba(245, 166, 35, 0.3);
+    border-radius: 12px;
+    color: #E8E6F0;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+tooltip {
+    background: #13131E;
+    border: 1px solid #2A2A42;
+    border-radius: 8px;
+    color: #E8E6F0;
+}
+
+tooltip label {
+    color: #E8E6F0;
+}
+
+/* ─── Modules Genel ──────────────────────────────────────────── */
+#workspaces,
+#clock,
+#pulseaudio,
+#network,
+#battery,
+#tray,
+#custom-logo,
+#custom-power {
+    padding: 0 12px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    transition: all 250ms ease;
+}
+
+/* ─── Logo ───────────────────────────────────────────────────── */
+#custom-logo {
+    color: #F5A623;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 8px;
+}
+
+/* ─── Workspaces ─────────────────────────────────────────────── */
+#workspaces button {
+    padding: 0 6px;
+    margin: 4px 2px;
+    color: #6B6880;
+    border-radius: 6px;
+    background: transparent;
+    transition: all 250ms ease;
+}
+
+#workspaces button:hover {
+    color: #A9A6B8;
+    background: rgba(245, 166, 35, 0.1);
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#workspaces button.active {
+    color: #F5A623;
+    background: rgba(245, 166, 35, 0.15);
+    border-bottom: 2px solid #F5A623;
+}
+
+#workspaces button.urgent {
+    color: #F87171;
+    background: rgba(248, 113, 113, 0.15);
+}
+
+/* ─── Clock ──────────────────────────────────────────────────── */
+#clock {
+    color: #E8E6F0;
+    font-weight: 600;
+}
+
+#clock:hover {
+    background: rgba(245, 166, 35, 0.1);
+    color: #FFD080;
+}
+
+/* ─── Ses ────────────────────────────────────────────────────── */
+#pulseaudio {
+    color: #C084FC;
+}
+
+#pulseaudio:hover {
+    background: rgba(192, 132, 252, 0.1);
+}
+
+#pulseaudio.muted {
+    color: #6B6880;
+}
+
+/* ─── Ağ ─────────────────────────────────────────────────────── */
+#network {
+    color: #60A5FA;
+}
+
+#network:hover {
+    background: rgba(96, 165, 250, 0.1);
+}
+
+#network.disconnected {
+    color: #F87171;
+}
+
+/* ─── Batarya ────────────────────────────────────────────────── */
+#battery {
+    color: #4ADE80;
+}
+
+#battery:hover {
+    background: rgba(74, 222, 128, 0.1);
+}
+
+#battery.charging {
+    color: #FBBF24;
+}
+
+#battery.warning:not(.charging) {
+    color: #FBBF24;
+}
+
+#battery.critical:not(.charging) {
+    color: #F87171;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    to {
+        color: #E8E6F0;
+    }
+}
+
+/* ─── Tray ───────────────────────────────────────────────────── */
+#tray {
+    margin-right: 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* ─── Separator ──────────────────────────────────────────────── */
+#custom-separator {
+    color: #2A2A42;
+    padding: 0 4px;
+}
+
+/* ─── Power ──────────────────────────────────────────────────── */
+#custom-power {
+    color: #F87171;
+    padding: 0 10px;
+}
+
+#custom-power:hover {
+    background: rgba(248, 113, 113, 0.15);
+    border-radius: 8px;
+}

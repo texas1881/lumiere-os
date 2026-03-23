@@ -1,0 +1,22 @@
+# Build
+out/
+*.iso
+
+# Temp
+/tmp/
+*.log
+*.bak
+*.swp
+*~
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace

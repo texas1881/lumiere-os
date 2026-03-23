@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière OS Kur
+GenericName=OS Installer
+Comment=Lumière OS kurulum sihirbazı
+Exec=lumiere-installer
+Icon=system-installer
+Terminal=false
+Categories=System;
+Keywords=install;installer;setup;kurulum;
+StartupNotify=true

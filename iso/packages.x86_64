@@ -1,0 +1,165 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║          ✦ Lumière OS — MVP Paket Listesi                    ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# ─── Temel Sistem ───────────────────────────────────────────────
+base
+base-devel
+linux
+linux-firmware
+linux-headers
+
+# ─── Bootloader ─────────────────────────────────────────────────
+efibootmgr
+
+# ─── Dosya Sistemi ──────────────────────────────────────────────
+btrfs-progs
+dosfstools
+ntfs-3g
+unzip
+p7zip
+
+# ─── Ağ ─────────────────────────────────────────────────────────
+networkmanager
+network-manager-applet
+iwd
+bluez
+bluez-utils
+
+# ─── Ses ────────────────────────────────────────────────────────
+pipewire
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+wireplumber
+pavucontrol
+
+# ─── Grafik ─────────────────────────────────────────────────────
+mesa
+vulkan-icd-loader
+xf86-video-amdgpu
+xf86-video-intel
+
+# ─── Wayland & Compositor ──────────────────────────────────────
+wayland
+xorg-xwayland
+hyprland
+xdg-desktop-portal-hyprland
+
+# ─── Panel & UI ─────────────────────────────────────────────────
+waybar
+rofi-wayland
+mako
+swaylock-effects
+swww
+wl-clipboard
+cliphist
+grim
+slurp
+
+# ─── Login Manager ─────────────────────────────────────────────
+greetd
+greetd-tuigreet
+
+# ─── Terminal ───────────────────────────────────────────────────
+kitty
+zsh
+starship
+fzf
+zoxide
+bat
+eza
+ripgrep
+fd
+
+# ─── Font ───────────────────────────────────────────────────────
+inter-font
+ttf-jetbrains-mono-nerd
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+
+# ─── Tema & Görünüm ────────────────────────────────────────────
+papirus-icon-theme
+gtk4
+gtk3
+
+# ─── Uygulamalar ────────────────────────────────────────────────
+firefox
+thunar
+thunar-volman
+gvfs
+nano
+fastfetch
+htop
+brightnessctl
+
+# ─── Geliştirici Araçları ──────────────────────────────────────
+git
+python
+python-pip
+
+# ─── Güvenlik ───────────────────────────────────────────────────
+polkit
+polkit-gnome
+
+# ─── Boot Splash ────────────────────────────────────────────────
+plymouth
+
+# ─── v0.2 Parıltı ──────────────────────────────────────────────
+python-gobject
+libadwaita
+xcursor-themes
+parted
+inkscape
+
+# ─── v0.3 Aydınlanma ───────────────────────────────────────────
+wlroots
+wayland-protocols
+libinput
+pixman
+xkbcommon
+meson
+flatpak
+xdg-desktop-portal
+rust
+
+# ─── v1.0 Tam Işık ─────────────────────────────────────────────
+
+# GPU (NVIDIA opsiyonel — hw-detect ile kurulur)
+nvidia-dkms
+nvidia-utils
+nvidia-settings
+egl-wayland
+
+# Yazıcı
+cups
+cups-pdf
+system-config-printer
+
+# Webcam
+v4l-utils
+
+# USB otomatik bağlama
+udisks2
+udiskie
+
+# Güç yönetimi
+power-profiles-daemon
+
+# Qt Wayland desteği
+qt5-wayland
+qt6-wayland
+
+# Medya
+imv
+mpv
+
+# Araçlar
+xdg-utils
+wlr-randr
+bc
+gnome-text-editor
+file-roller
+evince
+

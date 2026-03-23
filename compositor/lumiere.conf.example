@@ -1,0 +1,43 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║       ✦ Lumière Compositor — Örnek Konfigürasyon             ║
+# ╚══════════════════════════════════════════════════════════════╝
+# Dosya yolu: ~/.config/lumiere/compositor.conf
+
+[general]
+gaps_inner = 4
+gaps_outer = 8
+border_width = 2
+border_radius = 8
+
+[colors]
+border_active = #F5A623ee
+border_inactive = #2A2A4288
+background = #0D0D14
+
+[animations]
+enabled = true
+duration = 250
+
+[input]
+kb_layout = tr
+kb_variant =
+cursor_size = 24
+natural_scroll = true
+tap_to_click = true
+
+# ── Kısayollar ──────────────────────────────────────────────────
+# Dahili kısayollar (değiştirilemez):
+#   Super+Return     = Terminal aç
+#   Super+Q          = Pencereyi kapat
+#   Super+V          = Float geçiş
+#   Super+F          = Fullscreen geçiş
+#   Super+1-9        = Workspace geçişi
+#   Super+Escape     = Compositor'dan çık
+
+# [bind]
+# super+d = rofi -show drun
+# super+e = thunar
+# super+l = swaylock
+# super+t = ~/.config/hypr/scripts/theme-switcher.sh toggle
+# super+i = lumiere-settings
+# super+m = lumiere-monitor

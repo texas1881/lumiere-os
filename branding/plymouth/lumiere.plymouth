@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Lumière OS
+Description=Lumière OS boot splash — koyu tema, altın animasyon
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/lumiere
+ScriptFile=/usr/share/plymouth/themes/lumiere/lumiere.script

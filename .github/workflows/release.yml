@@ -1,0 +1,92 @@
+name: "🚀 Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+
+    steps:
+      - name: "📦 Sistem hazırlığı"
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm archiso git base-devel
+
+      - name: "📥 Kaynak kodu indir"
+        uses: actions/checkout@v4
+
+      - name: "🏷️ Sürüm bilgisi"
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "## Release: $VERSION" >> $GITHUB_STEP_SUMMARY
+
+      - name: "🔨 ISO oluştur"
+        run: |
+          chmod +x iso/build.sh
+          cd iso && sudo bash build.sh
+
+      - name: "🔑 Checksum oluştur"
+        run: |
+          cd out
+          sha256sum *.iso > SHA256SUMS
+          md5sum *.iso > MD5SUMS
+
+      - name: "📋 Release notları oluştur"
+        id: notes
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          ISO_NAME=$(ls out/*.iso | head -1 | xargs basename)
+          ISO_SIZE=$(ls -lh out/*.iso | awk '{print $5}')
+          SHA=$(cat out/SHA256SUMS | awk '{print $1}')
+
+          cat > release_notes.md << EOF
+          # ✦ Lumière OS $VERSION
+
+          ## İndirme
+
+          | Dosya | Boyut |
+          |---|---|
+          | $ISO_NAME | $ISO_SIZE |
+
+          ## SHA256 Checksum
+          \`\`\`
+          $(cat out/SHA256SUMS)
+          \`\`\`
+
+          ## Kurulum
+          1. ISO'yu USB'ye yazın (Rufus / dd)
+          2. UEFI modunda boot edin
+          3. Masaüstünden Lumière Installer'ı çalıştırın
+
+          ## Dokümantasyon
+          - [Kullanıcı Rehberi](docs/USER_GUIDE.md)
+          - [Kısayollar](docs/SHORTCUTS.md)
+          - [SSS](docs/FAQ.md)
+
+          ---
+          ✦ Işığı takip et.
+          EOF
+
+      - name: "🚀 GitHub Release oluştur"
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "✦ Lumière OS ${{ steps.version.outputs.version }}"
+          body_path: release_notes.md
+          files: |
+            out/*.iso
+            out/SHA256SUMS
+            out/MD5SUMS
+          draft: false
+          prerelease: false

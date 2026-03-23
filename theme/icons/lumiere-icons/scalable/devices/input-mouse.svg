@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Mouse -->
+  <rect x="36" y="16" width="56" height="96" rx="28" fill="#1A1A2E" stroke="#F5A623" stroke-width="3"/>
+  <!-- Divider line -->
+  <line x1="64" y1="16" x2="64" y2="56" stroke="#2A2A42" stroke-width="2"/>
+  <!-- Scroll wheel -->
+  <rect x="58" y="36" width="12" height="20" rx="6" fill="none" stroke="#F5A623" stroke-width="2"/>
+  <circle cx="64" cy="44" r="3" fill="#F5A623"/>
+  <!-- Mouse LED -->
+  <circle cx="64" cy="96" r="4" fill="#F5A623" opacity="0.4"/>
+</svg>

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 Soru & Tartışma"
+    url: https://github.com/texas1881/lumiere-os/discussions
+    about: "Hata bildirimi değilse, Discussions'da sorun."
+  - name: "📖 Dokümantasyon"
+    url: https://github.com/texas1881/lumiere-os/wiki
+    about: "Kullanım rehberi ve wiki."

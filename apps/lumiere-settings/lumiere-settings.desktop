@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière Ayarlar
+GenericName=System Settings
+Comment=Lumière OS sistem ayarları
+Exec=lumiere-settings
+Icon=settings
+Terminal=false
+Categories=Settings;DesktopSettings;
+Keywords=settings;preferences;ayarlar;system;
+StartupNotify=true

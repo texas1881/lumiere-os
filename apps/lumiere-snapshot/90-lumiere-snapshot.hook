@@ -1,0 +1,12 @@
+[Trigger]
+Type = Path
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Target = *
+
+[Action]
+Description = Lumière Snapshot: güncelleme öncesi otomatik snapshot
+When = PreTransaction
+Exec = /usr/local/bin/lumiere-snapshot create "pacman-otomatik"
+AbortOnFail

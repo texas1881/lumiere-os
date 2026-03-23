@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Lumière Monitor Launcher
+exec python3 /usr/share/lumiere/monitor/monitor.py "$@"

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- WiFi / Wireless -->
+  <path d="M64 100 L64 96" stroke="#F5A623" stroke-width="0"/>
+  <circle cx="64" cy="96" r="8" fill="#F5A623"/>
+  <path d="M40 76 A32 32 0 0 1 88 76" fill="none" stroke="#F5A623" stroke-width="5" stroke-linecap="round"/>
+  <path d="M24 56 A52 52 0 0 1 104 56" fill="none" stroke="#F5A623" stroke-width="5" stroke-linecap="round"/>
+  <path d="M8 36 A72 72 0 0 1 120 36" fill="none" stroke="#F5A623" stroke-width="5" stroke-linecap="round"/>
+</svg>

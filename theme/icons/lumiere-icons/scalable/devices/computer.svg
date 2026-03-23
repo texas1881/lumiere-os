@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Computer / Desktop -->
+  <rect x="16" y="16" width="96" height="68" rx="8" fill="#1A1A2E" stroke="#F5A623" stroke-width="3"/>
+  <rect x="24" y="24" width="80" height="52" rx="2" fill="#0D0D14"/>
+  <!-- Lumière reflection -->
+  <path d="M28 72 L104 72 L104 76 L28 76Z" fill="#F5A623" opacity="0.1"/>
+  <!-- Stand -->
+  <rect x="48" y="84" width="32" height="8" rx="2" fill="#1F1F33"/>
+  <rect x="36" y="92" width="56" height="8" rx="4" fill="#2A2A42"/>
+  <!-- Power LED -->
+  <circle cx="64" cy="108" r="3" fill="#F5A623"/>
+</svg>

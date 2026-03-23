@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Home Folder icon -->
+  <path d="M12 36 L12 100 Q12 108 20 108 L108 108 Q116 108 116 100 L116 48 Q116 40 108 40 L60 40 L52 28 Q50 24 46 24 L20 24 Q12 24 12 36Z" fill="#F5A623"/>
+  <path d="M12 52 L116 52 L116 100 Q116 108 108 108 L20 108 Q12 108 12 100Z" fill="#FFD080"/>
+  <!-- Home symbol -->
+  <path d="M64 62 L48 76 L48 92 L58 92 L58 82 L70 82 L70 92 L80 92 L80 76Z" fill="#C4841A" stroke="#C4841A" stroke-width="2" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,63 @@
+name: "🔨 Build ISO"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * 1"  # Her Pazartesi 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    name: Build Lumière OS ISO
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+
+    steps:
+      - name: "📦 Sistem hazırlığı"
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm archiso git base-devel
+
+      - name: "📥 Kaynak kodu indir"
+        uses: actions/checkout@v4
+
+      - name: "🔨 ISO oluştur"
+        run: |
+          chmod +x iso/build.sh
+          cd iso && sudo bash build.sh
+
+      - name: "📋 ISO bilgileri"
+        run: |
+          echo "## Build Bilgileri" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          ls -lh out/*.iso 2>/dev/null | while read line; do
+            echo "- $line" >> $GITHUB_STEP_SUMMARY
+          done
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Build tarihi: $(date -u)" >> $GITHUB_STEP_SUMMARY
+
+      - name: "📤 ISO artifact yükle"
+        uses: actions/upload-artifact@v4
+        with:
+          name: lumiere-os-iso
+          path: out/*.iso
+          retention-days: 7
+          compression-level: 0
+
+      - name: "🔑 SHA256 checksum oluştur"
+        run: |
+          cd out
+          sha256sum *.iso > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: "📤 Checksum yükle"
+        uses: actions/upload-artifact@v4
+        with:
+          name: lumiere-os-checksums
+          path: out/SHA256SUMS
+          retention-days: 7

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière Sistem Monitörü
+GenericName=System Monitor
+Comment=CPU, RAM, disk ve ağ kullanımını izleyin
+Exec=lumiere-monitor
+Icon=monitor
+Terminal=false
+Categories=System;Monitor;
+Keywords=system;monitor;cpu;ram;disk;network;sistem;
+StartupNotify=true

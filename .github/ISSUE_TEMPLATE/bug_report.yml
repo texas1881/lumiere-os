@@ -1,0 +1,82 @@
+name: Bug Report / Hata Bildirimi
+description: Bir hata veya beklenmeyen davranış bildirin
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ✦ Lumière OS hata bildirimi. Lütfen mümkün olduğunca detaylı doldurun.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Açıklama
+      description: Hatayı kısaca açıklayın
+      placeholder: Ne oldu?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Tekrarlama Adımları
+      description: Hatayı nasıl tekrarlayabiliriz?
+      placeholder: |
+        1. '...' menüsüne git
+        2. '...' butonuna tıkla
+        3. Hatayı gör
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Beklenen Davranış
+      description: Ne olmasını bekliyordunuz?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Gerçekleşen Davranış
+      description: Bunun yerine ne oldu?
+    validations:
+      required: true
+
+  - type: textarea
+    id: system
+    attributes:
+      label: Sistem Bilgileri
+      description: Aşağıdaki komutu çalıştırıp çıktıyı yapıştırın
+      placeholder: |
+        fastfetch veya:
+        - Lumière OS sürümü:
+        - Kernel: $(uname -r)
+        - GPU: $(lspci | grep VGA)
+        - RAM: $(free -h | head -2)
+      render: text
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log Çıktıları
+      description: İlgili log çıktıları (opsiyonel)
+      render: text
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Ekran Görüntüleri
+      description: Varsa ekran görüntüsü ekleyin
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Kontrol Listesi
+      options:
+        - label: Sistemi güncelledim (`lumiere-update`)
+          required: false
+        - label: Mevcut issue'ları kontrol ettim
+          required: true

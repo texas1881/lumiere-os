@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Keyboard -->
+  <rect x="8" y="32" width="112" height="64" rx="8" fill="#1A1A2E" stroke="#F5A623" stroke-width="3"/>
+  <!-- Key rows -->
+  <g fill="#2A2A42" rx="2">
+    <rect x="16" y="40" width="10" height="10" rx="2"/>
+    <rect x="30" y="40" width="10" height="10" rx="2"/>
+    <rect x="44" y="40" width="10" height="10" rx="2"/>
+    <rect x="58" y="40" width="10" height="10" rx="2"/>
+    <rect x="72" y="40" width="10" height="10" rx="2"/>
+    <rect x="86" y="40" width="10" height="10" rx="2"/>
+    <rect x="100" y="40" width="10" height="10" rx="2"/>
+    <rect x="20" y="54" width="10" height="10" rx="2"/>
+    <rect x="34" y="54" width="10" height="10" rx="2"/>
+    <rect x="48" y="54" width="10" height="10" rx="2"/>
+    <rect x="62" y="54" width="10" height="10" rx="2"/>
+    <rect x="76" y="54" width="10" height="10" rx="2"/>
+    <rect x="90" y="54" width="10" height="10" rx="2"/>
+  </g>
+  <!-- Space bar -->
+  <rect x="32" y="68" width="64" height="10" rx="3" fill="#F5A623" opacity="0.6"/>
+  <!-- Modifier keys -->
+  <rect x="16" y="68" width="12" height="10" rx="2" fill="#2A2A42"/>
+  <rect x="100" y="68" width="12" height="10" rx="2" fill="#2A2A42"/>
+  <!-- LED indicators -->
+  <circle cx="100" y="84" r="2" fill="#4ADE80"/>
+</svg>

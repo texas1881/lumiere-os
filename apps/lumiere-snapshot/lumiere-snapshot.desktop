@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière Snapshot Yöneticisi
+GenericName=Snapshot Manager
+Comment=Btrfs snapshot oluşturma, listeleme ve geri alma
+Exec=lumiere-snapshot-gui
+Icon=drive-harddisk-symbolic
+Terminal=false
+Categories=System;
+Keywords=snapshot;btrfs;backup;rollback;
+StartupNotify=true

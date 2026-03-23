@@ -1,0 +1,71 @@
+name: "🔍 Lint"
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "🔍 Shell scriptlerini kontrol et"
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: .
+          severity: warning
+          format: gcc
+        env:
+          SHELLCHECK_OPTS: -e SC1091 -e SC2034
+
+  python-lint:
+    name: Python Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "🐍 Python kurulumu"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: "📦 flake8 kur"
+        run: pip install flake8
+
+      - name: "🔍 Python dosyalarını kontrol et"
+        run: |
+          find . -name "*.py" -not -path "./.git/*" | head -20
+          flake8 --max-line-length=120 --ignore=E402,W503,E501 \
+            $(find . -name "*.py" -not -path "./.git/*")
+
+  yaml-lint:
+    name: YAML Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "📦 yamllint kur"
+        run: pip install yamllint
+
+      - name: "🔍 YAML dosyalarını kontrol et"
+        run: |
+          yamllint -d "{extends: relaxed, rules: {line-length: {max: 200}}}" \
+            .github/workflows/*.yml \
+            .github/ISSUE_TEMPLATE/*.yml
+
+  markdown-links:
+    name: Markdown Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "🔗 Kırık bağlantıları kontrol et"
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: "yes"
+          config-file: ".github/mlc_config.json"
+        continue-on-error: true

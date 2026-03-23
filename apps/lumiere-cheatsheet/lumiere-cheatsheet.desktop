@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière Shortcuts
+Name[tr]=Lumière Kısayolları
+Comment=Keyboard shortcuts reference
+Comment[tr]=Klavye kısayolları rehberi
+Exec=lumiere-cheatsheet
+Icon=input-keyboard
+Terminal=false
+Categories=Utility;
+Keywords=shortcuts;keyboard;keys;help;kısayol;

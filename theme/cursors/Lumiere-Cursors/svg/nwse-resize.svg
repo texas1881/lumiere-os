@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- NW-SE resize cursor (diagonal) -->
+  <line x1="6" y1="6" x2="26" y2="26" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+  <polyline points="6,14 6,6 14,6" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="26,18 26,26 18,26" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

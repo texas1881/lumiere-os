@@ -1,0 +1,135 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║          ✦ Lumière OS — Plymouth Boot Splash Script          ║
+# ╚══════════════════════════════════════════════════════════════╝
+# Plymouth scripting dili ile boot animasyonu
+
+# ─── Arka Plan ──────────────────────────────────────────────────
+Window.SetBackgroundTopColor(0.05, 0.05, 0.08);    # #0D0D14
+Window.SetBackgroundBottomColor(0.08, 0.08, 0.12);  # #13131E
+
+# ─── Logo ───────────────────────────────────────────────────────
+logo.image = Image("logo.png");
+logo.sprite = Sprite(logo.image);
+logo.sprite.SetX(Window.GetWidth() / 2 - logo.image.GetWidth() / 2);
+logo.sprite.SetY(Window.GetHeight() / 2 - logo.image.GetHeight() / 2 - 40);
+logo.sprite.SetOpacity(1);
+
+# ─── Alt Metin ──────────────────────────────────────────────────
+subtitle.image = Image.Text("Işığı takip et.", 0.64, 0.65, 0.69, 1, "Inter 14");
+subtitle.sprite = Sprite(subtitle.image);
+subtitle.sprite.SetX(Window.GetWidth() / 2 - subtitle.image.GetWidth() / 2);
+subtitle.sprite.SetY(Window.GetHeight() / 2 + logo.image.GetHeight() / 2 + 10);
+subtitle.sprite.SetOpacity(0.7);
+
+# ─── İlerleme Çubuğu ───────────────────────────────────────────
+progress_bar.original_image = Image("progress-bar.png");
+progress_bar.sprite = Sprite();
+
+progress_bar.x = Window.GetWidth() / 2 - 150;
+progress_bar.y = Window.GetHeight() / 2 + 80;
+
+# ─── İlerleme Noktaları (animasyonlu) ──────────────────────────
+NUM_DOTS = 5;
+DOT_SIZE = 8;
+DOT_SPACING = 24;
+dots_x = Window.GetWidth() / 2 - (NUM_DOTS * DOT_SPACING) / 2;
+dots_y = Window.GetHeight() / 2 + 80;
+
+for (i = 0; i < NUM_DOTS; i++) {
+    dots[i].sprite = Sprite();
+    dots[i].sprite.SetPosition(dots_x + i * DOT_SPACING, dots_y, 10);
+    dots[i].active = 0;
+}
+
+# Animasyon sayacı
+global.counter = 0;
+global.active_dot = 0;
+
+# ─── Animasyon Döngüsü ─────────────────────────────────────────
+fun refresh_callback() {
+    global.counter++;
+
+    # Her 15 frame'de bir sonraki noktayı aktifleştir
+    if (global.counter % 15 == 0) {
+        global.active_dot = (global.active_dot + 1) % NUM_DOTS;
+    }
+
+    # Noktaları çiz
+    for (i = 0; i < NUM_DOTS; i++) {
+        if (i == global.active_dot) {
+            # Aktif nokta — altın rengi
+            dot_image = Image.Text("●", 0.96, 0.65, 0.14, 1, "Sans 12");
+        } else {
+            # Pasif nokta — soluk
+            dot_image = Image.Text("●", 0.27, 0.27, 0.38, 1, "Sans 8");
+        }
+        dots[i].sprite.SetImage(dot_image);
+    }
+
+    # Logo pulse efekti (hafif opacity değişimi)
+    opacity = 0.85 + 0.15 * Math.Abs(Math.Sin(global.counter * 0.03));
+    logo.sprite.SetOpacity(opacity);
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
+
+# ─── Boot İlerleme ─────────────────────────────────────────────
+fun boot_progress_callback(time, progress) {
+    # İlerleme yüzdesini göster
+    if (progress > 0) {
+        progress_text = Image.Text(Math.Int(progress * 100) + "%", 0.42, 0.41, 0.50, 1, "Inter 11");
+        progress_label.sprite = Sprite(progress_text);
+        progress_label.sprite.SetX(Window.GetWidth() / 2 - progress_text.GetWidth() / 2);
+        progress_label.sprite.SetY(dots_y + 30);
+    }
+}
+
+Plymouth.SetBootProgressFunction(boot_progress_callback);
+
+# ─── Mesajlar ───────────────────────────────────────────────────
+message.sprite = Sprite();
+
+fun message_callback(text) {
+    if (text != "") {
+        msg_image = Image.Text(text, 0.66, 0.65, 0.72, 1, "Inter 11");
+        message.sprite.SetImage(msg_image);
+        message.sprite.SetX(Window.GetWidth() / 2 - msg_image.GetWidth() / 2);
+        message.sprite.SetY(Window.GetHeight() - 60);
+    }
+}
+
+Plymouth.SetMessageFunction(message_callback);
+
+# ─── Parola Girişi (şifreli disk için) ──────────────────────────
+fun password_dialogue_setup(title, bullet_count) {
+    dialog.image = Image.Text(title, 0.96, 0.65, 0.14, 1, "Inter 13");
+    dialog.sprite = Sprite(dialog.image);
+    dialog.sprite.SetX(Window.GetWidth() / 2 - dialog.image.GetWidth() / 2);
+    dialog.sprite.SetY(Window.GetHeight() / 2 + 120);
+
+    # Bullet'lar
+    bullets = "";
+    for (i = 0; i < bullet_count; i++) {
+        bullets += "● ";
+    }
+
+    if (bullet_count > 0) {
+        bullet_image = Image.Text(bullets, 0.96, 0.65, 0.14, 1, "Inter 16");
+        bullet.sprite = Sprite(bullet_image);
+        bullet.sprite.SetX(Window.GetWidth() / 2 - bullet_image.GetWidth() / 2);
+        bullet.sprite.SetY(Window.GetHeight() / 2 + 150);
+    }
+}
+
+Plymouth.SetDisplayPasswordFunction(password_dialogue_setup);
+
+# ─── Quit ───────────────────────────────────────────────────────
+fun quit_callback() {
+    logo.sprite.SetOpacity(0);
+    subtitle.sprite.SetOpacity(0);
+    for (i = 0; i < NUM_DOTS; i++) {
+        dots[i].sprite.SetOpacity(0);
+    }
+}
+
+Plymouth.SetQuitFunction(quit_callback);

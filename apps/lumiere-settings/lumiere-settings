@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Lumière Settings Launcher
+exec python3 /usr/share/lumiere/settings/settings.py "$@"

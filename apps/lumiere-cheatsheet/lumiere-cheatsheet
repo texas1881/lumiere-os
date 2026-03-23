@@ -1,0 +1,2 @@
+#!/bin/bash
+exec python3 /usr/share/lumiere/cheatsheet/cheatsheet.py "$@"

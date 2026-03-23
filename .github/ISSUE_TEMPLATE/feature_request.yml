@@ -1,0 +1,58 @@
+name: Feature Request / Özellik İsteği
+description: Yeni bir özellik veya iyileştirme önerin
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ✦ Lumière OS'u daha iyi yapmamıza yardımcı olun!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivasyon
+      description: Bu özellik hangi sorunu çözüyor?
+      placeholder: "... yaparken ... ile karşılaşıyorum"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Önerilen Çözüm
+      description: İdeal çözümü nasıl hayal ediyorsunuz?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatifler
+      description: Düşündüğünüz başka çözümler var mı?
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: İlgili Bileşen
+      options:
+        - Masaüstü (Compositor / Hyprland)
+        - Terminal
+        - Tema / Görünüm
+        - Paket Yönetimi
+        - Installer
+        - App Store
+        - Sistem Araçları
+        - Donanım Desteği
+        - Dokümantasyon
+        - Diğer
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Kontrol Listesi
+      options:
+        - label: Mevcut issue ve tartışmaları kontrol ettim
+          required: true
+        - label: Bu özellik için PR göndermeye istekliyim
+          required: false

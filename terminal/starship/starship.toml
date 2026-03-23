@@ -1,0 +1,134 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              ✦ Lumière OS — Starship Prompt                  ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# Genel
+format = """
+[╭─](bold fg:#2A2A42)\
+$os\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$rust\
+$nodejs\
+$golang\
+$docker_context\
+$cmd_duration\
+$line_break\
+[╰─](bold fg:#2A2A42)\
+$character"""
+
+palette = "lumiere_dark"
+
+[palettes.lumiere_dark]
+gold = "#F5A623"
+gold_light = "#FFD080"
+surface = "#1A1A2E"
+text = "#E8E6F0"
+muted = "#6B6880"
+green = "#4ADE80"
+red = "#F87171"
+blue = "#60A5FA"
+magenta = "#C084FC"
+cyan = "#22D3EE"
+yellow = "#FBBF24"
+
+# ─── OS ─────────────────────────────────────────────────────────
+[os]
+disabled = false
+style = "bold fg:gold"
+format = "[$symbol ]($style)"
+
+[os.symbols]
+Arch = "✦"
+Linux = "✦"
+
+# ─── Kullanıcı ──────────────────────────────────────────────────
+[username]
+style_user = "bold fg:gold_light"
+style_root = "bold fg:red"
+format = "[$user]($style) "
+show_always = false
+
+# ─── Host ───────────────────────────────────────────────────────
+[hostname]
+ssh_only = true
+format = "@ [$hostname](bold fg:blue) "
+
+# ─── Dizin ──────────────────────────────────────────────────────
+[directory]
+style = "bold fg:blue"
+format = "[  $path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾"
+read_only_style = "fg:red"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Videos" = " "
+
+# ─── Git ────────────────────────────────────────────────────────
+[git_branch]
+symbol = " "
+style = "bold fg:magenta"
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+style = "fg:gold"
+format = '([$all_status$ahead_behind]($style) )'
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+conflicted = "=${count}"
+deleted = "✘${count}"
+modified = "!${count}"
+stashed = "*${count}"
+staged = "+${count}"
+untracked = "?${count}"
+
+# ─── Diller ─────────────────────────────────────────────────────
+[python]
+symbol = "󰌠 "
+style = "fg:yellow"
+format = "[$symbol($version )(\\($virtualenv\\) )]($style)"
+
+[rust]
+symbol = "🦀 "
+style = "fg:red"
+format = "[$symbol($version )]($style)"
+
+[nodejs]
+symbol = " "
+style = "fg:green"
+format = "[$symbol($version )]($style)"
+
+[golang]
+symbol = " "
+style = "fg:cyan"
+format = "[$symbol($version )]($style)"
+
+# ─── Docker ─────────────────────────────────────────────────────
+[docker_context]
+symbol = "󰡨 "
+style = "fg:blue"
+format = "[$symbol$context]($style) "
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+# ─── Komut Süresi ───────────────────────────────────────────────
+[cmd_duration]
+min_time = 2_000
+style = "fg:muted"
+format = "[  $duration]($style) "
+
+# ─── Karakter ───────────────────────────────────────────────────
+[character]
+success_symbol = "[❯](bold fg:gold)"
+error_symbol = "[❯](bold fg:red)"
+vimcmd_symbol = "[❮](bold fg:green)"

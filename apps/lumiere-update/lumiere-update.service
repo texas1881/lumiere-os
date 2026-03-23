@@ -1,0 +1,7 @@
+[Unit]
+Description=Lumière OS Güncelleme Kontrolü Servisi
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lumiere-update check
+User=root

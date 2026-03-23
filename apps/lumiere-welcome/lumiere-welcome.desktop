@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumière Welcome
+GenericName=Welcome Application
+Comment=Lumière OS hoş geldin uygulaması
+Exec=lumiere-welcome
+Icon=lumiere-welcome
+Terminal=false
+Categories=Utility;System;
+StartupNotify=true
+Keywords=welcome;lumiere;hoşgeldin;

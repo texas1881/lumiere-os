@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Terminal icon -->
+  <rect x="8" y="16" width="112" height="88" rx="10" fill="#1A1A2E" stroke="#F5A623" stroke-width="3"/>
+  <text x="24" y="60" font-family="monospace" font-size="20" fill="#F5A623">❯</text>
+  <rect x="40" y="48" width="40" height="3" rx="1.5" fill="#4ADE80"/>
+  <rect x="24" y="68" width="60" height="3" rx="1.5" fill="#A9A6B8"/>
+  <rect x="24" y="82" width="35" height="3" rx="1.5" fill="#60A5FA"/>
+  <rect x="8" y="104" width="112" height="8" rx="0 0 10 10" fill="#13131E"/>
+</svg>

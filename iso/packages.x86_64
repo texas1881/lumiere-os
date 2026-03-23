@@ -11,6 +11,8 @@ linux-headers
 
 # ─── Bootloader ─────────────────────────────────────────────────
 efibootmgr
+intel-ucode
+amd-ucode
 
 # ─── Dosya Sistemi ──────────────────────────────────────────────
 btrfs-progs

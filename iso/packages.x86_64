@@ -50,7 +50,7 @@ xdg-desktop-portal-hyprland
 waybar
 rofi-wayland
 mako
-swaylock-effects
+swaylock
 swww
 wl-clipboard
 cliphist
@@ -114,11 +114,9 @@ parted
 inkscape
 
 # ─── v0.3 Aydınlanma ───────────────────────────────────────────
-wlroots
 wayland-protocols
 libinput
 pixman
-xkbcommon
 meson
 flatpak
 xdg-desktop-portal

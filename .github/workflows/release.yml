@@ -67,9 +67,12 @@ jobs:
           \`\`\`
 
           ## Kurulum
-          1. ISO'yu USB'ye yazın (Rufus / dd)
-          2. UEFI modunda boot edin
-          3. Masaüstünden Lumière Installer'ı çalıştırın
+          1. ISO parçalarını indirin ve terminalde \`cat $ISO_NAME.part* > $ISO_NAME\` komutuyla (Windows'ta CMD kullanarak \`copy /b $ISO_NAME.part* $ISO_NAME\`) birleştirin.
+          2. Birleştirilmiş ISO'yu USB'ye yazın (Rufus / dd)
+          3. UEFI modunda boot edin
+          4. Masaüstünden Lumière Installer'ı çalıştırın
+
+          > **Not**: ISO dosyası GitHub'ın 2GB limiti nedeniyle parçalara ayrılmıştır. Kurulumdan önce parçaları birleştirmeniz gerekmektedir.
 
           ## Dokümantasyon
           - [Kullanıcı Rehberi](docs/USER_GUIDE.md)
@@ -80,13 +83,20 @@ jobs:
           ✦ Işığı takip et.
           EOF
 
+      - name: "✂️ ISO dosyasını böl (GitHub < 2GB limit)"
+        run: |
+          cd out
+          for f in *.iso; do
+            split -b 1800M "$f" "$f.part"
+          done
+
       - name: "🚀 GitHub Release oluştur"
         uses: softprops/action-gh-release@v2
         with:
           name: "✦ Lumière OS ${{ steps.version.outputs.version }}"
           body_path: release_notes.md
           files: |
-            out/*.iso
+            out/*.iso.part*
             out/SHA256SUMS
             out/MD5SUMS
           draft: false
